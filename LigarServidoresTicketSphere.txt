@@ -1,0 +1,41 @@
+#########################################################################
+(Backend)                                                               #
+                                                                        #
+C:\Users\Liionforce\Desktop\TicketSphere\backend       			#
+									#
+.\venv\Scripts\activate							#
+									#
+pip install -r requirements.txt                                         #
+									#
+python -m uvicorn app.main:app --reload --port 8000                     #
+									#
+									#
+(Frontend)								#
+									#
+Terminal 2 (novo terminal: Ctrl + Shift + `)				#
+cd C:\Users\Liionforce\Desktop\TicketSphere\frontend			#							#
+									#
+									#
+http://localhost:5000							#
+									#
+#########################################################################
+
+
+	Instalar dependências:
+
+	pip install -r requirements.txt
+
+	Rodar servidor:
+
+	python -m uvicorn app.main:app --reload --port 8000
+
+	Pronto! Servidor ativo em http://localhost:8000
+
+
+admin@empresa.pt
+admin123
+
+tecnico@empresa.pt
+tecnico123
+
+utilizador@empresa.pt

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TicketSphere · Sistema de Gestão de Tickets</title>
+  <link rel="icon" href="data:,">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2563EB">
+  <meta name="description" content="Plataforma de helpdesk para gestão de tickets de suporte">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Helpdesk">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%232563EB' width='180' height='180'/><text x='90' y='100' font-size='80' fill='%23fff' text-anchor='middle' font-weight='bold'>H</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/assets/styles.css">
+</head>
+<body>
+  <div id="app"></div>
+
+  <!-- Local offline-ready UMD builds (preventing CDN loading failures) -->
+  <script src="src/assets/vue.global.prod.js"></script>
+  <script src="src/assets/vue-router.global.prod.js"></script>
+  <script src="src/assets/chart.umd.min.js"></script>
+
+  <script type="module" src="src/main.js"></script>
+
+  <script>
+    // Registar Service Worker para PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(reg => console.log('✓ Service Worker registado'))
+          .catch(err => console.log('Erro ao registar SW:', err));
+      });
+    }
+
+    // Detectar prompt de instalação nativa
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      window.dispatchEvent(new CustomEvent('pwa-prompt-ready'));
+    });
+
+    window.addEventListener('appinstalled', () => {
+      deferredPrompt = null;
+      console.log('✓ PWA instalada');
+    });
+
+    // Expor função de instalação global
+    window.installPWA = async function() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`Instalação: ${outcome}`);
+        deferredPrompt = null;
+      }
+    };
+  </script>
+</body>
+</html>

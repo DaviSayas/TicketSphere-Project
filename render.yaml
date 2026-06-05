@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: ticketsphere
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        value: sqlite:///./tickets.db
+      - key: ENABLE_SCHEDULER
+        value: "false"

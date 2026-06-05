@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+venv/
+# .env is committed for online deploy defaults
+*.db
+.pytest_cache/
+node_modules/
